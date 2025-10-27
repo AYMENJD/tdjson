@@ -1,6 +1,5 @@
 name: Build and Publish Wheels
-on:
-  workflow_dispatch:
+on: [workflow_dispatch]
 
 env:
   USING_PYTHON_VERSION: '3.13.9'
@@ -88,8 +87,72 @@ jobs:
           name: wheels-${{ matrix.runner }}
           path: ./wheelhouse/*.whl
 
+  windows-build:
+    needs: prepare
+    runs-on: windows-2025
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download updated files
+        uses: actions/download-artifact@v4
+        with:
+          name: updated-files
+          path: .
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.USING_PYTHON_VERSION }}
+
+      - name: Install Python dependencies
+        shell: bash
+        run: python -m pip install --upgrade cibuildwheel
+
+      - name: Build TDLib
+        shell: bash
+
+        run: |
+          git clone --depth 1 https://github.com/tdlib/td.git
+          cd td
+          cat << EOF > vcpkg.json
+          {
+            "dependencies": [ "gperf", "openssl", "zlib" ],
+            "builtin-baseline": "afb2279ad78a7c29b5293d989b9a1a2ca00000cf",
+            "overrides": [
+              { "name": "openssl", "version": "1.1.1m" }
+            ]
+          }
+          EOF
+          git clone https://github.com/Microsoft/vcpkg.git
+          cd vcpkg
+          ./bootstrap-vcpkg.bat
+          cd ..
+          rm -rf build
+          mkdir build
+          cd build
+          cmake -A x64 -DCMAKE_INSTALL_PREFIX:PATH=../tdlib -DCMAKE_TOOLCHAIN_FILE:FILEPATH=../vcpkg/scripts/buildsystems/vcpkg.cmake ..
+          cmake --build . --target install --config Release -j3
+          cd ..
+          cd ..
+          ls -l td/tdlib
+
+      - name: Build wheels
+        shell: bash
+        env:
+          CMAKE_PREFIX_PATH: ${{ github.workspace }}/td/tdlib
+
+        run: |
+          mkdir -p ./wheelhouse
+          python -m cibuildwheel . --output-dir ./wheelhouse
+
+      - name: Upload wheels
+        uses: actions/upload-artifact@v4
+        with:
+          name: wheels-windows
+          path: ./wheelhouse/*.whl
+
   publish:
-    needs: [prepare, linux-build]
+    needs: [prepare, linux-build, windows-build]
     runs-on: ubuntu-latest
     permissions:
       contents: write
