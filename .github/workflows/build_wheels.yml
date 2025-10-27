@@ -135,6 +135,7 @@ jobs:
           cd ..
           cd ..
           ls -l td/tdlib
+          echo "${{ github.workspace }}/td/tdlib/bin" >> $GITHUB_PATH
 
       - name: Build wheels
         shell: bash
