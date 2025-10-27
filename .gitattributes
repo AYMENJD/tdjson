@@ -1,2 +1,3 @@
 *.txt linguist-detectable=false
 *.cmake linguist-detectable=false
+next_version.py linguist-detectable=false
