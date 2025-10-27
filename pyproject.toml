@@ -4,7 +4,7 @@ build-backend = "scikit_build_core.build"
 
 [project]
 name = "tdjson"
-version = "1.8.56.post2"
+version = "1.8.56.post3"
 description = "High-performance Python binding for TDLib JSON interface. Works on Linux x86_64, includes pre-built TDLib, and outperforms python ctypes"
 readme = "README.md"
 authors = [{ name = "AYMEN Mohammed", email = "let.me.code.safe@gmail.com" }]
