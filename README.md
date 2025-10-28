@@ -13,8 +13,9 @@
         *   Ubuntu 13.10+
         *   Fedora 19+
         *   RHEL 7+
-*   **Windows** (`x64`)
-    *   Windows 10+
+
+*   **Windows** (`x86_64`)
+    *   Windows 7+
 
 ## Installation
 
