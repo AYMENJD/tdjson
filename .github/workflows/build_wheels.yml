@@ -34,13 +34,12 @@ jobs:
           echo "LATEST_TDLIB_VERSION=$LATEST_TDLIB_VERSION" >> $GITHUB_OUTPUT
           echo "PYPI_RELEASE_VERSION=$PYPI_RELEASE_VERSION" >> $GITHUB_OUTPUT
 
-      - name: Update pyproject.toml and README.md
+      - name: Apply version changes
         run: |
           LATEST_TDLIB_VERSION=${{ steps.vars.outputs.LATEST_TDLIB_VERSION }}
           PYPI_RELEASE_VERSION=${{ steps.vars.outputs.PYPI_RELEASE_VERSION }}
 
-          sed -i -r "s/^version = \".*\"/version = \"$PYPI_RELEASE_VERSION\"/" pyproject.toml
-          sed -i -r "s/^__version__ = \".*\"/__version__ = \"$PYPI_RELEASE_VERSION\"/" tdjson/__init__.py
+          sed -i -r "s/^__version__ = \".*\"/__version__ = \"$PYPI_RELEASE_VERSION\"/" tdjson/_version.py
           sed -i -r "s|(https://img.shields.io/badge/TDLib-v)[0-9\.]+(-blue)|\\1$LATEST_TDLIB_VERSION\\2|" README.md
 
       - name: Upload updated files
@@ -48,8 +47,7 @@ jobs:
         with:
           name: updated-files
           path: |
-            pyproject.toml
-            tdjson/__init__.py
+            tdjson/_version.py
             README.md
 
   linux-build:
@@ -182,6 +180,6 @@ jobs:
         uses: EndBug/add-and-commit@v9
         with:
           message: "Update TDLib to ${{ needs.prepare.outputs.LATEST_TDLIB_VERSION }} (tdlib/td@${{ needs.prepare.outputs.LATEST_TDLIB_COMMIT_HASH }})"
-          add: '["pyproject.toml", "README.md", "tdjson/__init__.py"]'
+          add: '["README.md", "tdjson/_version.py"]'
           committer_name: GitHub Actions
           committer_email: 41898282+github-actions[bot]@users.noreply.github.com
