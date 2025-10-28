@@ -6,7 +6,7 @@ env:
 
 jobs:
   prepare:
-    runs-on: ubuntu-latest
+    runs-on: tenki-standard-autoscale
     outputs:
       LATEST_TDLIB_VERSION: ${{ steps.vars.outputs.LATEST_TDLIB_VERSION }}
       LATEST_TDLIB_COMMIT_HASH: ${{ steps.vars.outputs.LATEST_TDLIB_COMMIT_HASH }}
@@ -54,7 +54,7 @@ jobs:
     needs: prepare
     strategy:
       matrix:
-        runner: [ubuntu-latest, ubuntu-24.04-arm]
+        runner: [tenki-standard-autoscale, ubuntu-24.04-arm]
 
     runs-on: ${{ matrix.runner }}
     steps:
