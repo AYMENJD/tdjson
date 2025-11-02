@@ -1,8 +1,12 @@
-# tdjson [![Version](https://img.shields.io/pypi/v/tdjson?style=flat&logo=pypi)](https://pypi.org/project/tdjson) [![TDLib version](https://img.shields.io/badge/TDLib-v1.8.56-blue?logo=telegram)](https://github.com/tdlib/td) ![Python Compatibility](https://img.shields.io/badge/dynamic/json?query=info.requires_python&label=python&url=https%3A%2F%2Fpypi.org%2Fpypi%2Ftdjson%2Fjson&style=flat&logo=python) [![Downloads](https://static.pepy.tech/personalized-badge/tdjson?period=month&units=none&left_color=grey&right_color=brightgreen&left_text=Downloads)](https://pepy.tech/project/tdjson)
+# tdjson [![Version](https://img.shields.io/pypi/v/tdjson?style=flat&logo=pypi)](https://pypi.org/project/tdjson) [![TDLib version](https://img.shields.io/badge/TDLib-v1.8.56-blue?logo=telegram)](https://github.com/tdlib/td) ![Python Compatibility](https://img.shields.io/badge/dynamic/json?query=info.requires_python&label=python&url=https%3A%2F%2Fpypi.org%2Fpypi%2Ftdjson%2Fjson&style=flat&logo=python) [![Downloads](https://static.pepy.tech/personalized-badge/tdjson?period=month&units=none&left_color=grey&right_color=blue&left_text=Downloads)](https://pepy.tech/project/tdjson)
 
 `tdjson` is a high-performance Python binding for [TDLib](https://github.com/tdlib/td) JSON interface. 
 
 By bundling **pre-built** TDLib binaries, it eliminates the effort for **manual** compilation and offers performance advantage over traditional `ctypes` wrappers, making it a reliable core for projects like [Pytdbot](https://github.com/pytdbot/client)
+
+<a href="https://cupofton.pages.dev/donate?a=UQCeySURtYxvqF2jNXlsFrXuTEqPjJhGx8uoev6tUbD_HELL&n=AYMEN&t=1&c=You+deserve+a+Cup+of+TON+for+tdjson%2521" target="_blank" rel="noopener">
+    <img src="https://cupofton.pages.dev/assets/badge-1.svg" alt="Buy me a Cup of TON" style="width: 600px; height: auto;">
+</a>
 
 ## Compatibility
 
