@@ -26,7 +26,7 @@ jobs:
       - name: Fetch TDLib version and commit hash
         id: vars
         run: |
-          LATEST_TDLIB_COMMIT_HASH=$(curl -s "https://api.github.com/repos/tdlib/td/commits/master" | grep -oP '"sha": "\K[^"]+' | head -1)
+          LATEST_TDLIB_COMMIT_HASH=$(git ls-remote https://github.com/tdlib/td.git refs/heads/master | cut -f1)
           LATEST_TDLIB_VERSION=$(curl -s "https://raw.githubusercontent.com/tdlib/td/$LATEST_TDLIB_COMMIT_HASH/CMakeLists.txt" | grep -oP 'project\(TDLib VERSION \K[0-9\.]+')
           PYPI_RELEASE_VERSION=$(python next_version.py $LATEST_TDLIB_VERSION)
 
@@ -128,10 +128,10 @@ jobs:
           rm -rf build
           mkdir build
           cd build
-          cmake -A x64 -DCMAKE_INSTALL_PREFIX:PATH=../tdlib -DCMAKE_TOOLCHAIN_FILE:FILEPATH=../vcpkg/scripts/buildsystems/vcpkg.cmake ..
-          cmake --build . --target install --config Release -j3
-          cd ..
-          cd ..
+          cmake -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX:PATH=../tdlib -DCMAKE_TOOLCHAIN_FILE:FILEPATH=../vcpkg/scripts/buildsystems/vcpkg.cmake ..
+          ls *
+          cmake --build . --target install --config Release
+          cd ../..
           ls -l td/tdlib
           echo "${{ github.workspace }}/td/tdlib/bin" >> $GITHUB_PATH
 
