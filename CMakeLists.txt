@@ -46,6 +46,7 @@ endif()
 nanobind_add_module(tdjson_ext STABLE_ABI FREE_THREADED NOMINSIZE LTO tdjson/tdjson.cpp)
 nanobind_add_stub(
   tdjson_ext_stub
+  INSTALL_TIME
   MODULE tdjson_ext
   OUTPUT tdjson_ext.pyi
   MARKER_FILE py.typed
@@ -57,8 +58,3 @@ target_link_libraries(tdjson_ext PRIVATE Td::TdJson)
 
 # install(TARGETS tdjson_ext LIBRARY DESTINATION ${CMAKE_SOURCE_DIR}/tdjson)
 install(TARGETS tdjson_ext LIBRARY DESTINATION tdjson)
-install(FILES
-    ${CMAKE_CURRENT_BINARY_DIR}/tdjson_ext.pyi
-    ${CMAKE_CURRENT_BINARY_DIR}/py.typed
-    DESTINATION tdjson
-)
