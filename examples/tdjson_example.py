@@ -17,7 +17,7 @@ _td_execute = tdjson.td_execute
 
 
 def td_execute(query):
-    query = json.dumps(query)
+    query = json.dumps(query).encode("utf-8")
     result = _td_execute(query)
     if result:
         result = json.loads(result)
@@ -43,7 +43,7 @@ client_id = _td_create_client_id()
 
 # simple wrappers for client usage
 def td_send(query):
-    query = json.dumps(query)
+    query = json.dumps(query).encode("utf-8")
     _td_send(client_id, query)
 
 

@@ -1,4 +1,4 @@
-# tdjson [![Version](https://img.shields.io/pypi/v/tdjson?style=flat&logo=pypi)](https://pypi.org/project/tdjson) [![TDLib version](https://img.shields.io/badge/TDLib-v1.8.58-blue?logo=telegram)](https://github.com/tdlib/td) ![Python Compatibility](https://img.shields.io/badge/dynamic/json?query=info.requires_python&label=python&url=https%3A%2F%2Fpypi.org%2Fpypi%2Ftdjson%2Fjson&style=flat&logo=python) [![Downloads](https://static.pepy.tech/personalized-badge/tdjson?period=month&units=none&left_color=grey&right_color=blue&left_text=Downloads)](https://pepy.tech/project/tdjson)
+# tdjson [![Version](https://img.shields.io/pypi/v/tdjson?style=flat&logo=pypi)](https://pypi.org/project/tdjson) [![TDLib version](https://img.shields.io/badge/TDLib-v1.8.56-blue?logo=telegram)](https://github.com/tdlib/td) ![Python Compatibility](https://img.shields.io/badge/dynamic/json?query=info.requires_python&label=python&url=https%3A%2F%2Fpypi.org%2Fpypi%2Ftdjson%2Fjson&style=flat&logo=python) [![Downloads](https://static.pepy.tech/personalized-badge/tdjson?period=month&units=none&left_color=grey&right_color=blue&left_text=Downloads)](https://pepy.tech/project/tdjson)
 
 `tdjson` is a high-performance Python binding for [TDLib](https://github.com/tdlib/td) JSON interface. 
 
@@ -44,14 +44,22 @@ client_id = tdjson.td_create_client_id()
 
 # Send a request to TDLib
 request = {"@type": "getOption", "name": "version"}
-tdjson.td_send(client_id, json.dumps(request))
+tdjson.td_send(client_id, json.dumps(request).encode("utf-8"))
 
 # Receive updates or responses
 response = tdjson.td_receive(10.0)
 print(response)
 
 # Synchronously execute a TDLib request
-result = tdjson.td_execute(json.dumps({"@type": "getTextEntities", "text": "@telegram /test_command https://telegram.org telegram.me", "@extra": ["5", 7.0, "a"]}))
+result = tdjson.td_execute(
+    json.dumps(
+        {
+            "@type": "getTextEntities",
+            "text": "@telegram /test_command https://telegram.org telegram.me",
+            "@extra": ["5", 7.0, "a"],
+        }
+    ).encode("utf-8")
+)
 print(result)
 ```
 
