@@ -128,9 +128,8 @@ jobs:
           rm -rf build
           mkdir build
           cd build
-          cmake -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX:PATH=../tdlib -DCMAKE_TOOLCHAIN_FILE:FILEPATH=../vcpkg/scripts/buildsystems/vcpkg.cmake ..
-          ls *
-          cmake --build . --target install --config Release
+          cmake -A x64 -DCMAKE_INSTALL_PREFIX:PATH=../tdlib -DCMAKE_TOOLCHAIN_FILE:FILEPATH=../vcpkg/scripts/buildsystems/vcpkg.cmake ..
+          cmake --build . --target install --config Release -j3
           cd ../..
           ls -l td/tdlib
           echo "${{ github.workspace }}/td/tdlib/bin" >> $GITHUB_PATH
