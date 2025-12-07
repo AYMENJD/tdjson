@@ -48,8 +48,8 @@ nanobind_add_stub(
   tdjson_ext_stub
   INSTALL_TIME
   MODULE tdjson_ext
-  OUTPUT tdjson_ext.pyi
-  MARKER_FILE py.typed
+  OUTPUT tdjson/tdjson_ext.pyi
+  MARKER_FILE tdjson/py.typed
   PYTHON_PATH $<TARGET_FILE_DIR:tdjson_ext>
   DEPENDS tdjson_ext
 )
