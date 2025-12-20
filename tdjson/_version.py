@@ -1,3 +1,3 @@
-__version__ = "1.8.58.post2"
+__version__ = "1.8.59"
 __copyright__ = "Copyright (c) 2025 AYMENJD"
 __license__ = "MIT License"
