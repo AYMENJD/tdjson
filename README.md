@@ -14,14 +14,11 @@ By bundling **pre-built** TDLib binaries, it eliminates the effort for **manual*
 
 *   **Linux** (`x86_64` and `aarch64`)
     *   Requires `glibc 2.17+`.
-    *   Includes most modern distributions like:
-        *   Debian 8+
-        *   Ubuntu 13.10+
-        *   Fedora 19+
-        *   RHEL 7+
+    *   Debian 8+, Ubuntu 13.10+, Fedora 19+, RHEL 7+
 
-*   **Windows** (`x86_64`)
-    *   Windows 7+
+* **Windows** (`x86_64`) — Windows 7+
+
+* **macOS** (`aarch64`) — macOS 11+
 
 ## Installation
 

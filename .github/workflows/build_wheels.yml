@@ -112,6 +112,17 @@ jobs:
         run: |
           git clone --depth 1 https://github.com/tdlib/td.git
           cd td
+          sed -i '
+          /^if[[:space:]]*(NOT CMAKE_CROSSCOMPILING)[[:space:]]*$/{
+            N
+            s/^if[[:space:]]*(NOT CMAKE_CROSSCOMPILING)[[:space:]]*\n[[:space:]]*add_executable(tg_cli /if (FALSE)\n  add_executable(tg_cli /
+          }
+          ' CMakeLists.txt
+          sed -i '
+          s/^[[:space:]]*add_subdirectory(benchmark)[[:space:]]*$/# add_subdirectory(benchmark)/;
+          s/^[[:space:]]*add_subdirectory(test)[[:space:]]*$/# add_subdirectory(test)/
+          ' CMakeLists.txt
+
           cat << EOF > vcpkg.json
           {
             "dependencies": [ "gperf", "openssl", "zlib" ],
@@ -147,6 +158,73 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: wheels-windows
+          path: ./wheelhouse/*.whl
+
+  macos-build:
+    needs: prepare
+    runs-on: tenki-macos-latest-small
+    env:
+      MACOSX_DEPLOYMENT_TARGET: "11.0"
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download updated files
+        uses: actions/download-artifact@v4
+        with:
+          name: updated-files
+          path: .
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.USING_PYTHON_VERSION }}
+
+      - name: Install Python dependencies
+        run: python -m pip install --upgrade cibuildwheel
+
+      - name: Build OpenSSL 1.1.1
+        run: |
+          sudo -E git clone --depth 1 --branch OpenSSL_1_1_1-stable https://github.com/openssl/openssl.git
+          cd openssl
+          sudo -E perl ./Configure darwin64-arm64-cc --prefix=/usr/local --openssldir=/usr/local/openssl
+          sudo -E make -j
+          sudo -E make install MANDIR=/usr/local/openssl/share/man MANSUFFIX=ssl
+
+      - name: Build TDLib
+        run: |
+          git clone https://github.com/tdlib/td.git
+          cd td
+          sed -i '' '
+          /^if[[:space:]]*(NOT CMAKE_CROSSCOMPILING)[[:space:]]*$/{
+            N
+            s/^if[[:space:]]*(NOT CMAKE_CROSSCOMPILING)[[:space:]]*\n[[:space:]]*add_executable(tg_cli /if (FALSE)\n  add_executable(tg_cli /
+          }
+          ' CMakeLists.txt
+          sed -i '' '
+          s/^[[:space:]]*add_subdirectory(benchmark)[[:space:]]*$/# add_subdirectory(benchmark)/;
+          s/^[[:space:]]*add_subdirectory(test)[[:space:]]*$/# add_subdirectory(test)/
+          ' CMakeLists.txt
+
+          rm -rf build
+          mkdir build
+          cd build
+          sudo -E cmake -G Ninja -DCMAKE_BUILD_TYPE=Release -DOPENSSL_ROOT_DIR=/usr/local -DCMAKE_INSTALL_PREFIX:PATH=/usr/local -DTD_ENABLE_LTO=ON ..
+          sudo -E cmake --build . --target install
+          cd ..
+          cd ..
+          ls -l /usr/local
+
+      - name: Build wheels
+
+        run: |
+          mkdir -p ./wheelhouse
+          sudo -E python -m cibuildwheel . --output-dir ./wheelhouse
+
+      - name: Upload wheels
+        uses: actions/upload-artifact@v4
+        with:
+          name: wheels-macos
           path: ./wheelhouse/*.whl
 
   publish:

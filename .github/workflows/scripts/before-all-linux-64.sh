@@ -26,6 +26,16 @@ cd .. && rm -rf zlib
 #Build TDLib
 git clone --depth 1 https://github.com/tdlib/td.git
 cd td
+sed -i '
+/^if (NOT CMAKE_CROSSCOMPILING)$/{
+N
+s/^if (NOT CMAKE_CROSSCOMPILING)\n[[:space:]]*add_executable(tg_cli /if (FALSE)\n  add_executable(tg_cli /
+}' CMakeLists.txt
+sed -i '
+s/^[[:space:]]*add_subdirectory(benchmark)[[:space:]]*$/# add_subdirectory(benchmark)/;
+s/^[[:space:]]*add_subdirectory(test)[[:space:]]*$/# add_subdirectory(test)/
+' CMakeLists.txt
+
 rm -rf build
 mkdir build
 cd build
