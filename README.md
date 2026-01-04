@@ -12,9 +12,7 @@ By bundling **pre-built** TDLib binaries, it eliminates the effort for **manual*
 
 `tdjson` is compatible with the following platforms:
 
-*   **Linux** (`x64` and `ARM64`)
-    *   Requires `glibc 2.17+`.
-    *   Debian 8+, Ubuntu 13.10+, Fedora 19+, RHEL 7+
+*   **Linux** (`x64` and `ARM64`) — Debian 8+, Ubuntu 13.10+, Fedora 19+, RHEL 7+
 
 * **Windows** (`x64`) — Windows 7+
 
