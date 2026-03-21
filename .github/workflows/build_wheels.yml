@@ -6,7 +6,7 @@ env:
 
 jobs:
   prepare:
-    runs-on: tenki-standard-autoscale
+    runs-on: ubuntu-latest
     outputs:
       LATEST_TDLIB_VERSION: ${{ steps.vars.outputs.LATEST_TDLIB_VERSION }}
       LATEST_TDLIB_COMMIT_HASH: ${{ steps.vars.outputs.LATEST_TDLIB_COMMIT_HASH }}
@@ -54,7 +54,7 @@ jobs:
     needs: prepare
     strategy:
       matrix:
-        runner: [tenki-standard-autoscale, ubuntu-24.04-arm]
+        runner: [ubuntu-latest, ubuntu-24.04-arm]
 
     runs-on: ${{ matrix.runner }}
     steps:
@@ -162,7 +162,7 @@ jobs:
 
   macos-build:
     needs: prepare
-    runs-on: tenki-macos-latest-small
+    runs-on: macos-latest
     env:
       MACOSX_DEPLOYMENT_TARGET: "11.0"
 
@@ -185,11 +185,11 @@ jobs:
 
       - name: Build OpenSSL 1.1.1
         run: |
-          sudo -E git clone --depth 1 --branch OpenSSL_1_1_1-stable https://github.com/openssl/openssl.git
+          git clone --depth 1 --branch OpenSSL_1_1_1-stable https://github.com/openssl/openssl.git
           cd openssl
-          sudo -E perl ./Configure darwin64-arm64-cc --prefix=/usr/local --openssldir=/usr/local/openssl
-          sudo -E make -j
-          sudo -E make install MANDIR=/usr/local/openssl/share/man MANSUFFIX=ssl
+          perl ./Configure darwin64-arm64-cc --prefix=/usr/local --openssldir=/usr/local/openssl
+          make -j
+          sudo make install MANDIR=/usr/local/openssl/share/man MANSUFFIX=ssl
 
       - name: Build TDLib
         run: |
@@ -209,17 +209,19 @@ jobs:
           rm -rf build
           mkdir build
           cd build
-          sudo -E cmake -G Ninja -DCMAKE_BUILD_TYPE=Release -DOPENSSL_ROOT_DIR=/usr/local -DCMAKE_INSTALL_PREFIX:PATH=/usr/local -DTD_ENABLE_LTO=ON ..
-          sudo -E cmake --build . --target install
-          cd ..
-          cd ..
+          cmake -G Ninja \
+            -DCMAKE_BUILD_TYPE=Release \
+            -DOPENSSL_ROOT_DIR=/usr/local \
+            -DCMAKE_INSTALL_PREFIX:PATH=/usr/local \
+            -DTD_ENABLE_LTO=ON ..
+          cmake --build . --target install
+          cd ../..
           ls -l /usr/local
 
       - name: Build wheels
-
         run: |
           mkdir -p ./wheelhouse
-          sudo -E python -m cibuildwheel . --output-dir ./wheelhouse
+          python -m cibuildwheel . --output-dir ./wheelhouse
 
       - name: Upload wheels
         uses: actions/upload-artifact@v4
