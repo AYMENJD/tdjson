@@ -13,7 +13,7 @@ jobs:
       PYPI_RELEASE_VERSION: ${{ steps.vars.outputs.PYPI_RELEASE_VERSION }}
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -58,7 +58,7 @@ jobs:
 
     runs-on: ${{ matrix.runner }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Download updated files
         uses: actions/download-artifact@v4
@@ -89,7 +89,7 @@ jobs:
     needs: prepare
     runs-on: windows-2022
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Download updated files
         uses: actions/download-artifact@v4
@@ -167,7 +167,7 @@ jobs:
       MACOSX_DEPLOYMENT_TARGET: "11.0"
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Download updated files
         uses: actions/download-artifact@v4
@@ -237,7 +237,7 @@ jobs:
       id-token: write
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Download all wheels
         uses: actions/download-artifact@v4
