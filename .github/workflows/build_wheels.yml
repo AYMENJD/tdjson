@@ -43,7 +43,7 @@ jobs:
           sed -i -r "s|(https://img.shields.io/badge/TDLib-v)[0-9\.]+(-blue)|\\1$LATEST_TDLIB_VERSION\\2|" README.md
 
       - name: Upload updated files
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: updated-files
           path: |
@@ -80,7 +80,7 @@ jobs:
           python -m cibuildwheel . --output-dir ./wheelhouse
 
       - name: Upload wheels
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: wheels-${{ matrix.runner }}
           path: ./wheelhouse/*.whl
@@ -155,7 +155,7 @@ jobs:
           python -m cibuildwheel . --output-dir ./wheelhouse
 
       - name: Upload wheels
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: wheels-windows
           path: ./wheelhouse/*.whl
@@ -224,7 +224,7 @@ jobs:
           python -m cibuildwheel . --output-dir ./wheelhouse
 
       - name: Upload wheels
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: wheels-macos
           path: ./wheelhouse/*.whl
