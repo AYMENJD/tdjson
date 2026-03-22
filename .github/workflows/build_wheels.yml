@@ -61,7 +61,7 @@ jobs:
       - uses: actions/checkout@v6
 
       - name: Download updated files
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: updated-files
           path: .
@@ -92,7 +92,7 @@ jobs:
       - uses: actions/checkout@v6
 
       - name: Download updated files
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: updated-files
           path: .
@@ -170,7 +170,7 @@ jobs:
       - uses: actions/checkout@v6
 
       - name: Download updated files
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: updated-files
           path: .
@@ -240,14 +240,14 @@ jobs:
       - uses: actions/checkout@v6
 
       - name: Download all wheels
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           pattern: wheels-*
           merge-multiple: true
           path: ./dist
 
       - name: Download updated files
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: updated-files
           path: .
