@@ -5,18 +5,41 @@ build-backend = "scikit_build_core.build"
 [project]
 name = "tdjson"
 dynamic = ["version"]
-description = "A high-performance Python binding for TDLib, outperforming ctypes and bundling pre-built binaries for effortless setup on Linux and Windows"
+description = "High-performance Python bindings for TDLib with native speed and prebuilt binaries for Linux, Windows, and macOS"
 readme = "README.md"
 authors = [{ name = "AYMEN", email = "let.me.code.safe@gmail.com" }]
-license = { text = "MIT" }
+license = "MIT"
+license-files = ["LICENSE"]
 requires-python = ">=3.9"
 keywords = [
     "tdlib",
     "telegram",
+    "tdlib-binding",
     "python-binding",
+    "native",
     "high-performance",
+    "prebuilt-binaries",
     "linux",
     "windows",
+    "macos",
+]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Programming Language :: Python :: 3.15",
+    "Programming Language :: C++",
+    "Topic :: Communications",
+    "Topic :: Communications :: Chat",
+    "Operating System :: POSIX :: Linux",
+    "Operating System :: Microsoft :: Windows",
+    "Operating System :: MacOS",
 ]
 
 [project.urls]
