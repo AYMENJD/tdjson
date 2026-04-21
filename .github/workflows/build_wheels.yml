@@ -40,7 +40,6 @@ jobs:
           PYPI_RELEASE_VERSION=${{ steps.vars.outputs.PYPI_RELEASE_VERSION }}
 
           sed -i -r "s/^__version__ = \".*\"/__version__ = \"$PYPI_RELEASE_VERSION\"/" tdjson/_version.py
-          sed -i -r "s|(https://img.shields.io/badge/TDLib-v)[0-9\.]+(-blue)|\\1$LATEST_TDLIB_VERSION\\2|" README.md
 
       - name: Upload updated files
         uses: actions/upload-artifact@v6
@@ -259,6 +258,6 @@ jobs:
         uses: EndBug/add-and-commit@v9
         with:
           message: "Update TDLib to ${{ needs.prepare.outputs.LATEST_TDLIB_VERSION }} (tdlib/td@${{ needs.prepare.outputs.LATEST_TDLIB_COMMIT_HASH }})"
-          add: '["README.md", "tdjson/_version.py"]'
+          add: '["tdjson/_version.py"]'
           committer_name: GitHub Actions
           committer_email: 41898282+github-actions[bot]@users.noreply.github.com
