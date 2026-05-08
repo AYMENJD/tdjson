@@ -58,7 +58,6 @@ CMAKE_BUILD_TYPE = "Release"
 
 [tool.cibuildwheel]
 build-verbosity = 1
-build-frontend = "build[uv]"
 skip = "*musllinux*"
 archs = ["native"]
 
