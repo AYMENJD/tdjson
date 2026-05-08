@@ -35,7 +35,7 @@ else()
     set(DEV_MODULE Development.Module)
 endif()
 
-find_package(Python COMPONENTS Interpreter ${DEV_MODULE} REQUIRED OPTIONAL_COMPONENTS Development.SABIModule)
+find_package(Python COMPONENTS Interpreter ${DEV_MODULE} REQUIRED)
 find_package(nanobind CONFIG REQUIRED)
 
 if (NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
@@ -43,7 +43,7 @@ if (NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
     set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS "Debug" "Release" "MinSizeRel" "RelWithDebInfo")
 endif()
 
-nanobind_add_module(tdjson_ext STABLE_ABI FREE_THREADED NOMINSIZE LTO tdjson/tdjson.cpp)
+nanobind_add_module(tdjson_ext FREE_THREADED NOMINSIZE LTO tdjson/tdjson.cpp)
 nanobind_add_stub(
   tdjson_ext_stub
   INSTALL_TIME
