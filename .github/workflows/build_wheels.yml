@@ -229,7 +229,7 @@ jobs:
           path: ./wheelhouse/*.whl
 
   publish:
-    needs: [prepare, linux-build, windows-build]
+    needs: [prepare, linux-build, windows-build, macos-build]
     runs-on: ubuntu-latest
     permissions:
       contents: write
